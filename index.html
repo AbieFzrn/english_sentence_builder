@@ -17,38 +17,16 @@
       <p class="text-sm text-pink-100">Atur pola kalimat, daftar kata, dan aturan permainan sebelum mulai.</p>
     </header>
 
-    <!-- Pola kata -->
+    <!-- Sentence folder -->
     <section class="card">
-      <h2 class="card-title">Pola kata</h2>
-      <p class="card-hint">Klik <b>+</b> untuk menambah kelas kata di posisi itu. Urutan tag sama dengan urutan kalimat yang harus disusun.</p>
-      <div id="pattern-container" class="flex min-h-[56px] flex-wrap items-center gap-2 rounded-2xl border border-pink-200 bg-white p-3"></div>
-    </section>
-
-    <!-- Kata per kelas -->
-    <section class="card">
-      <h2 class="card-title">Kata per kelas</h2>
-      <p class="card-hint">Ketik satu kata atau frasa, lalu tekan <kbd class="rounded border border-gray-300 bg-white px-1.5 text-xs">Enter</kbd>. Satu Enter menjadi satu kartu, jadi "ice cream" tetap satu kata.</p>
-      <p id="words-empty" class="rounded-2xl border border-dashed border-pink-300 p-4 text-center text-sm text-gray-500">Form kata muncul setelah kamu menambahkan tag di pola kata.</p>
-      <div id="words-container" class="space-y-4"></div>
-    </section>
-
-    <!-- Soal dan distractor -->
-    <section class="card">
-      <h2 class="card-title">Soal dan distractor</h2>
-      <p class="card-hint">Distractor adalah kartu pengecoh dengan bentuk kata yang salah. Pilih jenis yang cocok dengan materi hari ini.</p>
-      <div class="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label class="field-label" for="rounds">Jumlah soal</label>
-          <input id="rounds" type="number" min="1" max="50" value="5" class="field" />
-        </div>
-        <div>
-          <label class="field-label" for="distractor-count">Distractor per soal</label>
-          <input id="distractor-count" type="number" min="0" max="8" value="2" class="field" />
-        </div>
+      <h2 class="card-title">Sentence folder</h2>
+      <p class="card-hint">Tulis kalimat lengkap dan kata pengecohnya. Setiap kalimat menjadi satu soal.</p>
+      <div id="sentence-list" class="space-y-4"></div>
+      <button id="btn-add-sentence" type="button" class="mt-4 rounded-full bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">+ Tambah kalimat</button>
+      <div class="mt-5 max-w-xs">
+        <label class="field-label" for="rounds">Jumlah soal (diambil acak dari folder)</label>
+        <input id="rounds" type="number" min="1" max="50" value="5" class="field" />
       </div>
-      <p class="field-label mt-5">Jenis distractor</p>
-      <div id="distractor-types" class="grid gap-2 sm:grid-cols-2"></div>
-      <p id="distractor-note" class="mt-2 text-xs text-gray-500"></p>
     </section>
 
     <!-- Aturan permainan -->
@@ -63,6 +41,7 @@
         <span class="relative h-6 w-11 shrink-0 rounded-full bg-gray-300 transition peer-checked:bg-pink-500 peer-focus-visible:ring-2 peer-focus-visible:ring-pink-400 after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition peer-checked:after:translate-x-5 after:content-['']"></span>
       </label>
 
+
       <div class="grid gap-4 sm:grid-cols-3">
         <div>
           <label class="field-label" for="timer">Timer per soal</label>
@@ -75,7 +54,19 @@
             <option value="0">Tanpa timer</option>
           </select>
         </div>
+
         <div>
+          <label class="field-label" for="replays">Putar ulang kalimat</label>
+          <select id="replays" class="field">
+            <option value="0">Tanpa replay</option>
+            <option value="1">1 kali</option>
+            <option value="2">2 kali</option>
+            <option value="3" selected>3 kali</option>
+            <option value="5">5 kali</option>
+            <option value="-1">Tanpa batas</option>
+          </select>
+        </div>
+        <div> 
           <label class="field-label" for="word-speed">Gerak kata</label>
           <select id="word-speed" class="field">
             <option value="0">Diam</option>
@@ -159,7 +150,7 @@
     </button>
   </main>
 
-  <!-- ================= LAYAR GAME ================= -->
+  <!-- ================= LAYAR GAME ================= --> 
   <section id="game-screen" class="hidden h-dvh p-3">
     <div class="flex h-full flex-col gap-3">
       <button id="btn-back" type="button" class="self-start rounded-full border border-pink-300 bg-white px-4 py-2 text-sm font-semibold text-pink-600 hover:bg-pink-50 focus:outline-none focus:ring-2 focus:ring-pink-400">

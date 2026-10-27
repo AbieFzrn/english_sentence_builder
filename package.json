@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
-    "compromise": "^14.19.0",
     "phaser": "^4.2.1",
     "tailwindcss": "^4.3.3"
   }
