@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sentence Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body class="min-h-screen bg-pink-50 font-sans text-gray-800">
+
+  <!-- ================= LAYAR PENGATURAN ================= -->
+  <main id="setup-screen" class="mx-auto max-w-3xl p-4 sm:p-8">
+    <header class="mb-6 rounded-3xl bg-gradient-to-r from-pink-500 to-pink-400 px-6 py-5 text-white shadow-md">
+      <h1 class="text-2xl font-extrabold">Pengaturan Sentence Builder</h1>
+      <p class="text-sm text-pink-100">Atur pola kalimat, daftar kata, dan aturan permainan sebelum mulai.</p>
+    </header>
+
+    <!-- Pola kata -->
+    <section class="card">
+      <h2 class="card-title">Pola kata</h2>
+      <p class="card-hint">Klik <b>+</b> untuk menambah kelas kata di posisi itu. Urutan tag sama dengan urutan kalimat yang harus disusun.</p>
+      <div id="pattern-container" class="flex min-h-[56px] flex-wrap items-center gap-2 rounded-2xl border border-pink-200 bg-white p-3"></div>
+    </section>
+
+    <!-- Kata per kelas -->
+    <section class="card">
+      <h2 class="card-title">Kata per kelas</h2>
+      <p class="card-hint">Ketik satu kata atau frasa, lalu tekan <kbd class="rounded border border-gray-300 bg-white px-1.5 text-xs">Enter</kbd>. Satu Enter menjadi satu kartu, jadi "ice cream" tetap satu kata.</p>
+      <p id="words-empty" class="rounded-2xl border border-dashed border-pink-300 p-4 text-center text-sm text-gray-500">Form kata muncul setelah kamu menambahkan tag di pola kata.</p>
+      <div id="words-container" class="space-y-4"></div>
+    </section>
+
+    <!-- Soal dan distractor -->
+    <section class="card">
+      <h2 class="card-title">Soal dan distractor</h2>
+      <p class="card-hint">Distractor adalah kartu pengecoh dengan bentuk kata yang salah. Pilih jenis yang cocok dengan materi hari ini.</p>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label class="field-label" for="rounds">Jumlah soal</label>
+          <input id="rounds" type="number" min="1" max="50" value="5" class="field" />
+        </div>
+        <div>
+          <label class="field-label" for="distractor-count">Distractor per soal</label>
+          <input id="distractor-count" type="number" min="0" max="8" value="2" class="field" />
+        </div>
+      </div>
+      <p class="field-label mt-5">Jenis distractor</p>
+      <div id="distractor-types" class="grid gap-2 sm:grid-cols-2"></div>
+      <p id="distractor-note" class="mt-2 text-xs text-gray-500"></p>
+    </section>
+
+    <!-- Aturan permainan -->
+    <section class="card">
+      <h2 class="card-title">Aturan permainan</h2>
+      <label class="mb-4 flex cursor-pointer items-center justify-between gap-4 rounded-2xl border border-pink-200 bg-white p-3">
+        <span>
+          <span class="block text-sm font-semibold">Tampilkan petunjuk pola</span>
+          <span class="block text-xs text-gray-500">Urutan kelas kata ditampilkan di atas area susun.</span>
+        </span>
+        <input id="show-hint" type="checkbox" class="peer sr-only" checked />
+        <span class="relative h-6 w-11 shrink-0 rounded-full bg-gray-300 transition peer-checked:bg-pink-500 peer-focus-visible:ring-2 peer-focus-visible:ring-pink-400 after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition peer-checked:after:translate-x-5 after:content-['']"></span>
+      </label>
+
+      <div class="grid gap-4 sm:grid-cols-3">
+        <div>
+          <label class="field-label" for="timer">Timer per soal</label>
+          <select id="timer" class="field">
+            <option value="30">30 detik</option>
+            <option value="45">45 detik</option>
+            <option value="60" selected>60 detik</option>
+            <option value="90">90 detik</option>
+            <option value="120">120 detik</option>
+            <option value="0">Tanpa timer</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label" for="word-speed">Gerak kata</label>
+          <select id="word-speed" class="field">
+            <option value="0">Diam</option>
+            <option value="0.5">Pelan</option>
+            <option value="1" selected>Normal</option>
+            <option value="1.5">Cepat</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label" for="players">Jumlah pemain</label>
+          <select id="players" class="field">
+            <option value="1" selected>1 pemain</option>
+            <option value="2">2 pemain</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skor -->
+    <section class="card">
+      <h2 class="card-title">Skor</h2>
+      <p class="card-hint">Pemain dengan poin terbanyak di akhir semua soal menang.</p>
+      <div class="grid gap-4 sm:grid-cols-3">
+        <div>
+          <label class="field-label" for="score-correct">Poin jawaban benar</label>
+          <input id="score-correct" type="number" min="0" max="1000" value="100" class="field" />
+        </div>
+        <div>
+          <label class="field-label" for="score-wrong">Pengurangan jawaban salah</label>
+          <input id="score-wrong" type="number" min="0" max="1000" value="10" class="field" />
+        </div>
+        <div>
+          <label class="field-label" for="score-bonus">Bonus waktu maksimal</label>
+          <input id="score-bonus" type="number" min="0" max="1000" value="50" class="field" />
+        </div>
+      </div>
+      <p class="mt-3 text-xs text-gray-500">Bonus waktu paling besar kalau menjawab di detik pertama dan mengecil sampai 0 saat waktu habis. Isi 0 untuk mematikannya.</p>
+    </section>
+
+    <!-- Musik dan volume -->
+    <section class="card">
+      <h2 class="card-title">Musik dan volume</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label class="field-label" for="music-select">Musik latar</label>
+          <div class="flex gap-2">
+            <select id="music-select" class="field"></select>
+            <button id="preview-music" type="button" class="btn-preview">Coba</button>
+          </div>
+        </div>
+        <div>
+          <label class="field-label" for="music-volume">Volume musik <output id="music-volume-out" class="font-normal text-gray-500">50%</output></label>
+          <input id="music-volume" type="range" min="0" max="100" value="50" class="w-full accent-pink-500" />
+        </div>
+        <div>
+          <label class="field-label" for="success-select">Suara kata berhasil</label>
+          <div class="flex gap-2">
+            <select id="success-select" class="field"></select>
+            <button id="preview-success" type="button" class="btn-preview">Coba</button>
+          </div>
+        </div>
+        <div>
+          <label class="field-label" for="fail-select">Suara kata gagal</label>
+          <div class="flex gap-2">
+            <select id="fail-select" class="field"></select>
+            <button id="preview-fail" type="button" class="btn-preview">Coba</button>
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label class="field-label" for="sfx-volume">Volume efek suara <output id="sfx-volume-out" class="font-normal text-gray-500">80%</output></label>
+          <input id="sfx-volume" type="range" min="0" max="100" value="80" class="w-full accent-pink-500" />
+        </div>
+      </div>
+      <p id="audio-note" class="mt-3 text-xs text-red-600"></p>
+    </section>
+
+    <div id="form-error" role="alert" class="mb-4 hidden rounded-2xl border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700"></div>
+
+    <button id="btn-play" type="button" class="w-full rounded-full bg-pink-500 py-3 text-lg font-extrabold text-white shadow-md transition hover:bg-pink-600 focus:outline-none focus:ring-4 focus:ring-pink-300">
+      Simpan dan mainkan
+    </button>
+  </main>
+
+  <!-- ================= LAYAR GAME ================= -->
+  <section id="game-screen" class="hidden h-dvh p-3">
+    <div class="flex h-full flex-col gap-3">
+      <button id="btn-back" type="button" class="self-start rounded-full border border-pink-300 bg-white px-4 py-2 text-sm font-semibold text-pink-600 hover:bg-pink-50 focus:outline-none focus:ring-2 focus:ring-pink-400">
+        Kembali ke pengaturan
+      </button>
+      <!-- Area game mengisi sisa layar; bentuk kanvas Phaser mengikuti area ini -->
+      <div id="app" class="min-h-0 w-full flex-1 overflow-hidden rounded-3xl bg-pink-50"></div>
+    </div>
+  </section>
+
+  <!-- Menu pilihan kelas kata (dipakai bersama oleh semua tombol +) -->
+  <ul id="class-menu" class="fixed z-50 hidden max-h-64 min-w-[10rem] overflow-y-auto rounded-2xl border border-pink-200 bg-white py-1 shadow-lg"></ul>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

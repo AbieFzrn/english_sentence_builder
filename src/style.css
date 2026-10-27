@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Nunito", ui-rounded, system-ui, sans-serif;
+}
+
+@layer components {
+  .card {
+    @apply mb-5 rounded-3xl border-2 border-pink-200 bg-white/80 p-5 shadow-sm;
+  }
+  .card-title {
+    @apply mb-1 text-lg font-bold text-pink-700;
+  }
+  .card-hint {
+    @apply mb-4 text-sm text-gray-500;
+  }
+  .field-label {
+    @apply mb-1 block text-sm font-semibold text-gray-700;
+  }
+  .field {
+    @apply w-full min-w-0 rounded-full border border-pink-200 bg-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400 disabled:bg-gray-100 disabled:text-gray-400;
+  }
+  .btn-preview {
+    @apply shrink-0 rounded-full border border-pink-300 bg-white px-4 py-2 text-sm font-semibold text-pink-600 hover:bg-pink-50 focus:outline-none focus:ring-2 focus:ring-pink-400;
+  }
+}
